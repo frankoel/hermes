@@ -16,7 +16,7 @@ import java.io.Serializable;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Company implements Serializable
 {
-	
+	// comment
 	private static final long serialVersionUID = 1L;
 
 	@Id
