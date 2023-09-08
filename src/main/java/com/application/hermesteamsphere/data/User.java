@@ -1,4 +1,4 @@
-package com.application.hermesteamsphere.model.domain;
+package com.application.hermesteamsphere.data;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
