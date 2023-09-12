@@ -20,31 +20,17 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 	private static final String ACCESO_API = "ACCESO_API";
 
     @Override
-    protected void configure(HttpSecurity http) throws Exception{
+    protected void configure(HttpSecurity http) throws Exception
+	{
 
 		http.csrf().requireCsrfProtectionMatcher(new RequiresCsrfMatcher());
 
 		http.addFilterAfter(new JWTAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class)
 			.authorizeRequests()
-	        	.antMatchers("/swagger*").permitAll()
-				.antMatchers("/closeTab*").permitAll()
-				.antMatchers(HttpMethod.GET,"/company*").permitAll()
-				.antMatchers(HttpMethod.POST, "/company*").permitAll()
+				.antMatchers("/company*").hasAnyRole(ACCESO_API)
+				.antMatchers("/company/**").hasAnyRole(ACCESO_API)
 				.antMatchers(HttpMethod.POST, "/user").permitAll()
-	        	.antMatchers("/voyage*").hasAnyRole(ACCESO_API)
-	        	.antMatchers("/voyage-api*").hasAnyRole(ACCESO_API)
-	        	.antMatchers("/voyage-api/**").hasAnyRole(ACCESO_API)
-	        	.antMatchers(HttpMethod.POST, "/pages/**").permitAll()
-	        	.antMatchers(HttpMethod.POST, "/pages/administration/**").hasAnyRole("ADMINISTRADOR")
-	        	.anyRequest().authenticated()
-	        	.and()
-	            .exceptionHandling().accessDeniedPage("/accessDenied.xhtml")
-	        	.and()
-	        .sessionManagement()
-	        	.invalidSessionUrl("/expired")
-	            .maximumSessions(1)
-	            .expiredUrl("/expired");
-
+	        	.anyRequest().authenticated();
     }
 
 	@Override

@@ -1,6 +1,7 @@
 package com.application.hermesteamsphere.controller;
 
 import com.application.hermesteamsphere.data.User;
+import com.application.hermesteamsphere.dto.UserRestDTO;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.http.ResponseEntity;
@@ -23,10 +24,15 @@ public class UserController {
     private static final long EXPIRATION_TIME = 10 * 60 * 1000L; // 10 minutos
 
     @PostMapping("user")
-    public ResponseEntity<String> loginNew(@RequestBody String us) {
+    public ResponseEntity<String> loginNew(@RequestBody UserRestDTO us) {
+        // Ficticio, deberá recuperarse de la BD
+        // Obtener el user con el code indicado y
+        // comparar si la password es la misma
         User user = new User();
-        user.setId(3L);
-        user.setName("Fran");
+        user.setId(1L);
+        user.setCode(us.getCode());
+        user.setName("name");
+
     	String token = getTokenForUser(user, true);
     	return ResponseEntity.accepted().body(token);
     }
