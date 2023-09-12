@@ -18,14 +18,36 @@ public class CompanyController
 
     private static final Logger logger = LoggerFactory.getLogger(CompanyController.class);
 
-    @PostMapping(value = "/")
+    @PostMapping()
     public ResponseEntity<Company> createCompany(@RequestBody CompanyDTO company)
     {
         logger.info("createCompany init");
-        Company requestData = companyService.createCompany(company);
+        Company requestData = companyService.saveCompany(company);
         logger.info("createCompany end");
 
         return ResponseEntity.ok(requestData);
+    }
+
+    @PutMapping()
+    public ResponseEntity<String> updateCompany(@RequestBody CompanyDTO company)
+    {
+        logger.info("updateCompany init");
+        Company requestData = companyService.getCompanyById(company.getId());
+        if(requestData == null)
+        {
+            return ResponseEntity.notFound().build();
+        }
+        else
+        {
+            requestData.setId(company.getId());
+            requestData.setCode(company.getCode());
+            requestData.setName(company.getName());
+            requestData.setActive(company.getActive());
+            companyService.saveCompany(requestData);
+        }
+        logger.info("updateCompany end");
+
+        return ResponseEntity.ok("Updated ok");
     }
 
     @GetMapping(value = "/getCompanyById")
@@ -54,5 +76,24 @@ public class CompanyController
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(requestData);
+    }
+
+
+    @DeleteMapping(value="/{id}")
+    public ResponseEntity<String> deleteCompany(@PathVariable String id)
+    {
+        logger.info("deleteCompany init");
+        Company requestData = companyService.getCompanyById(Long.parseLong(id));
+        if(requestData == null)
+        {
+            return ResponseEntity.notFound().build();
+        }
+        else
+        {
+            companyService.deleteCompany(requestData);
+        }
+        logger.info("deleteCompany end");
+
+        return ResponseEntity.ok("Deleted ok");
     }
 }

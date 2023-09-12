@@ -16,10 +16,22 @@ public class CompanyServiceImpl implements CompanyService
     @Autowired
     CompanyRepository companyRepository;
 
-
-    public Company createCompany(CompanyDTO companyDTO)
+    @Override
+    public Company saveCompany(CompanyDTO companyDTO)
     {
         return companyRepository.save(companyDTOtoCompany(companyDTO));
+    }
+
+    @Override
+    public Company saveCompany(Company company)
+    {
+        return companyRepository.save(company);
+    }
+
+    @Override
+    public void deleteCompany(Company company)
+    {
+        companyRepository.delete(company);
     }
 
     @Override

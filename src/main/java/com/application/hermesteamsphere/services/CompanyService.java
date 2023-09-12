@@ -5,9 +5,13 @@ import com.application.hermesteamsphere.dto.CompanyDTO;
 
 public interface CompanyService
 {
-    Company createCompany(CompanyDTO companyDTO);
+    Company saveCompany(CompanyDTO companyDTO);
+
+    Company saveCompany(Company company);
 
     Company getCompanyById(Long id);
 
     Company getCompanyByCode(String code);
+
+    void deleteCompany(Company company);
 }
