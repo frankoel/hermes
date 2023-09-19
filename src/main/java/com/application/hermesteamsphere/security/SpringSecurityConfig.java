@@ -27,8 +27,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
 		http.addFilterAfter(new JWTAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class)
 			.authorizeRequests()
-				.antMatchers("/company*").hasAnyRole(ACCESO_API)
-				.antMatchers("/company/**").hasAnyRole(ACCESO_API)
+				.antMatchers("/company*").authenticated()
+				.antMatchers("/company/**").authenticated()
 				.antMatchers(HttpMethod.POST, "/user").permitAll()
 	        	.anyRequest().authenticated();
     }

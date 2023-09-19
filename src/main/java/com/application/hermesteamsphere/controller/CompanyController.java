@@ -19,13 +19,20 @@ public class CompanyController
     private static final Logger logger = LoggerFactory.getLogger(CompanyController.class);
 
     @PostMapping()
-    public ResponseEntity<Company> createCompany(@RequestBody CompanyDTO company)
+    public ResponseEntity<String> createCompany(@RequestBody CompanyDTO company)
     {
         logger.info("createCompany init");
+        company.setId(null);
+
+        if(companyService.getCompanyByCode(company.getCode()) != null)
+        {
+            return ResponseEntity.badRequest().body("Code " + company.getCode() + " duplicated");
+        }
+
         Company requestData = companyService.saveCompany(company);
         logger.info("createCompany end");
 
-        return ResponseEntity.ok(requestData);
+        return ResponseEntity.ok("Created with id [" + requestData.getId() + "]");
     }
 
     @PutMapping()
@@ -39,6 +46,12 @@ public class CompanyController
         }
         else
         {
+            Company comp = companyService.getCompanyByCode(company.getCode());
+            if(comp != null && comp.getId() != company.getId())
+            {
+                return ResponseEntity.badRequest().body("Code " + company.getCode() + " duplicated");
+            }
+
             requestData.setId(company.getId());
             requestData.setCode(company.getCode());
             requestData.setName(company.getName());
