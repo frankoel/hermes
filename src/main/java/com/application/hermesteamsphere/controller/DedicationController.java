@@ -1,6 +1,5 @@
 package com.application.hermesteamsphere.controller;
 
-import com.application.hermesteamsphere.data.Company;
 import com.application.hermesteamsphere.data.Dedication;
 import com.application.hermesteamsphere.data.Project;
 import com.application.hermesteamsphere.data.User;

@@ -1,11 +1,7 @@
 package com.application.hermesteamsphere.controller;
 
 import com.application.hermesteamsphere.data.Company;
-import com.application.hermesteamsphere.data.Dedication;
-import com.application.hermesteamsphere.data.Project;
 import com.application.hermesteamsphere.data.User;
-import com.application.hermesteamsphere.dto.DedicationDTO;
-import com.application.hermesteamsphere.dto.ProjectDTO;
 import com.application.hermesteamsphere.dto.UserDTO;
 import com.application.hermesteamsphere.dto.UserRestDTO;
 import com.application.hermesteamsphere.repositories.UserRepository;
