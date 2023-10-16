@@ -138,7 +138,7 @@ public class UserController {
         return ResponseEntity.ok("Deleted ok");
     }
 
-    @PostMapping("/login")
+    @PostMapping(value="/login")
     public ResponseEntity<String> loginNew(@RequestBody UserRestDTO us) {
         // Ficticio, deberá recuperarse de la BD
         // Obtener el user con el code indicado y
