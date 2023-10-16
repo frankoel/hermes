@@ -17,8 +17,6 @@ import java.util.HashSet;
 @EnableWebSecurity
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
-	private static final String ACCESO_API = "ACCESO_API";
-
     @Override
     protected void configure(HttpSecurity http) throws Exception
 	{
@@ -29,7 +27,14 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 			.authorizeRequests()
 				.antMatchers("/company*").authenticated()
 				.antMatchers("/company/**").authenticated()
-				.antMatchers(HttpMethod.POST, "/user").permitAll()
+				.antMatchers("/dedication/*").authenticated()
+				.antMatchers("/dedication/**").authenticated()
+				.antMatchers("/project/*").authenticated()
+				.antMatchers("/project/**").authenticated()
+				.antMatchers(HttpMethod.POST,"/user").authenticated()
+				.antMatchers(HttpMethod.PUT,"/user").authenticated()
+				.antMatchers(HttpMethod.DELETE,"/user").authenticated()
+				.antMatchers(HttpMethod.POST, "/user/login").permitAll()
 	        	.anyRequest().authenticated();
     }
 
