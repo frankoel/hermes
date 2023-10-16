@@ -31,10 +31,10 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/dedication/**").authenticated()
 				.antMatchers("/project/*").authenticated()
 				.antMatchers("/project/**").authenticated()
-				.antMatchers(HttpMethod.POST,"/user").authenticated()
-				.antMatchers(HttpMethod.PUT,"/user").authenticated()
-				.antMatchers(HttpMethod.DELETE,"/user").authenticated()
-				.antMatchers(HttpMethod.POST, "/user/login").permitAll()
+				//.antMatchers(HttpMethod.POST,"/user**").authenticated()
+				.antMatchers(HttpMethod.PUT,"/user**").authenticated()
+				.antMatchers(HttpMethod.DELETE,"/user**").authenticated()
+				.antMatchers(HttpMethod.POST, "/user/login*").permitAll()
 	        	.anyRequest().authenticated();
     }
 

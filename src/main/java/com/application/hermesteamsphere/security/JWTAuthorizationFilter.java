@@ -31,20 +31,29 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
     		throws ServletException, IOException {
        
     	try {
-    		
-            if (checkJWTToken(request)) {
-            	
-                Claims claims = validateToken(request);
-                
-                if (claims.get("authorities") != null) {
-                    setUpSpringAuthentication(claims);
+    		if (!request.getRequestURI().contains("login"))
+            {
+                if (checkJWTToken(request)) {
+
+                    Claims claims = validateToken(request);
+
+                    if (claims.get("authorities") != null) {
+                        setUpSpringAuthentication(claims);
+                    } else {
+                        SecurityContextHolder.clearContext();
+                    }
+
+                    chain.doFilter(request, response);
                 }
-                else {
-                    SecurityContextHolder.clearContext();
+                else
+                {
+                    response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+                    response.sendError(HttpServletResponse.SC_FORBIDDEN, "Not token");
                 }
+
             }
-            
             chain.doFilter(request, response);
+
         }
         catch (ExpiredJwtException | UnsupportedJwtException | MalformedJwtException e) {
 			log.error("{}", e + " " + Arrays.toString(e.getStackTrace()));

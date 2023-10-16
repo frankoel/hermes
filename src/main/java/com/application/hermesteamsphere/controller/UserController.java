@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 
 import static com.application.hermesteamsphere.util.Constantes.*;
 
-@RestController("user")
+@RestController("/user")
 public class UserController {
 	
 	private static final String USER_SEPARATOR = "_";
