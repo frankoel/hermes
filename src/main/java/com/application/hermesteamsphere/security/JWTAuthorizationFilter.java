@@ -52,7 +52,10 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
                 }
 
             }
-            chain.doFilter(request, response);
+            else
+            {
+                chain.doFilter(request, response);
+            }
 
         }
         catch (ExpiredJwtException | UnsupportedJwtException | MalformedJwtException e) {
