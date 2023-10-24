@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 
 import static com.application.hermesteamsphere.util.Constantes.*;
 
-@RestController("/user")
+@RestController()
 public class UserController {
 	
 	private static final String USER_SEPARATOR = "_";
@@ -41,7 +41,7 @@ public class UserController {
     CompanyService companyService;
 
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
-    @PostMapping()
+    @PostMapping("/user")
     public ResponseEntity<String> createUser(@RequestBody UserDTO user)
     {
         logger.info("createDedication init");
@@ -59,7 +59,7 @@ public class UserController {
 
     }
 
-    @PutMapping()
+    @PutMapping("/user")
     public ResponseEntity<String> updateUser(@RequestBody UserDTO user)
     {
         logger.info("updateUser init");
@@ -91,7 +91,7 @@ public class UserController {
         return ResponseEntity.ok("Updated ok");
     }
 
-    @GetMapping(value = "/getUserById")
+    @GetMapping(value = "/user/getUserById")
     public ResponseEntity<User> getUserById(@RequestParam String id)
     {
         logger.info("getUserById init");
@@ -105,7 +105,7 @@ public class UserController {
         return ResponseEntity.ok(requestData);
     }
 
-    @GetMapping(value = "/getUserByCode")
+    @GetMapping(value = "/user/getUserByCode")
     public ResponseEntity<User> getUserByCode(@RequestParam String code)
     {
         logger.info("getUserByCode init");
@@ -120,7 +120,7 @@ public class UserController {
     }
 
 
-    @DeleteMapping(value="/{id}")
+    @DeleteMapping(value="/user/{id}")
     public ResponseEntity<String> deleteUser(@PathVariable String id)
     {
         logger.info("deleteUser init");
@@ -138,7 +138,7 @@ public class UserController {
         return ResponseEntity.ok("Deleted ok");
     }
 
-    @PostMapping(value="/login")
+    @PostMapping(value="/user/login")
     public ResponseEntity<String> loginNew(@RequestBody UserRestDTO us) {
         // Ficticio, deberá recuperarse de la BD
         // Obtener el user con el code indicado y
