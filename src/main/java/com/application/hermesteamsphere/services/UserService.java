@@ -18,4 +18,6 @@ public interface UserService
     List<User> getUsersByCodeCompany(String codeCompany);
 
     void deleteUser(User project);
+
+    UserDTO toDTO(User user);
 }

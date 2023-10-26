@@ -85,7 +85,7 @@ public class DedicationController
     }
 
     @GetMapping(value = "/getDedicationById")
-    public ResponseEntity<Dedication> getDedicationById(@RequestParam String id)
+    public ResponseEntity<DedicationDTO> getDedicationById(@RequestParam String id)
     {
         logger.info("getDedicationById init");
         Dedication requestData = dedicationService.getDedicationById(Long.parseLong(id));
@@ -95,11 +95,11 @@ public class DedicationController
         {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(requestData);
+        return ResponseEntity.ok(dedicationService.toDTO(requestData));
     }
 
     @GetMapping(value = "/getDedicationByProjectAndUser")
-    public ResponseEntity<List<Dedication>> getDedicationByProjectAndUser(@RequestParam String codProject, @RequestParam String codUser)
+    public ResponseEntity<List<DedicationDTO>> getDedicationByProjectAndUser(@RequestParam String codProject, @RequestParam String codUser)
     {
         logger.info("getDedicationById init");
         List<Dedication> requestData = dedicationService.getDedicationsByCodeProjectAndCodeUser(codProject, codUser);
@@ -109,7 +109,8 @@ public class DedicationController
         {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(requestData);
+
+        return ResponseEntity.ok(dedicationService.toListDTO(requestData));
     }
 
 

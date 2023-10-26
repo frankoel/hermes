@@ -69,4 +69,17 @@ public class CompanyServiceImpl implements CompanyService
 
         return company;
     }
+
+    @Override
+    public CompanyDTO toDTO(Company company)
+    {
+        CompanyDTO companyDTO = new CompanyDTO();
+
+        companyDTO.setId(companyDTO.getId());
+        companyDTO.setActive(companyDTO.getActive());
+        companyDTO.setName(companyDTO.getName());
+        companyDTO.setCode(companyDTO.getCode());
+
+        return companyDTO;
+    }
 }

@@ -92,7 +92,7 @@ public class UserController {
     }
 
     @GetMapping(value = "/user/getUserById")
-    public ResponseEntity<User> getUserById(@RequestParam String id)
+    public ResponseEntity<UserDTO> getUserById(@RequestParam String id)
     {
         logger.info("getUserById init");
         User requestData = userService.getUserById(Long.parseLong(id));
@@ -102,11 +102,11 @@ public class UserController {
         {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(requestData);
+        return ResponseEntity.ok(userService.toDTO(requestData));
     }
 
     @GetMapping(value = "/user/getUserByCode")
-    public ResponseEntity<User> getUserByCode(@RequestParam String code)
+    public ResponseEntity<UserDTO> getUserByCode(@RequestParam String code)
     {
         logger.info("getUserByCode init");
         User requestData = userService.getUserByCode(code);
@@ -116,7 +116,7 @@ public class UserController {
         {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(requestData);
+        return ResponseEntity.ok(userService.toDTO(requestData));
     }
 
 

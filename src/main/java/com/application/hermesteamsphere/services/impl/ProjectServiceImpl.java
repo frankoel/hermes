@@ -97,4 +97,19 @@ public class ProjectServiceImpl implements ProjectService
 
         return project;
     }
+
+    @Override
+    public ProjectDTO toDTO(Project project)
+    {
+        ProjectDTO projectDTO = new ProjectDTO();
+
+        projectDTO.setId(project.getId());
+        projectDTO.setActive(project.getActive());
+        projectDTO.setName(project.getName());
+        projectDTO.setCode(project.getCode());
+        projectDTO.setDescription(project.getDescription());
+        projectDTO.setCodeCompany(project.getCompany().getCode());
+
+        return projectDTO;
+    }
 }

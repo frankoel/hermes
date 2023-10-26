@@ -64,7 +64,7 @@ public class CompanyController
     }
 
     @GetMapping(value = "/getCompanyById")
-    public ResponseEntity<Company> getCompanyById(@RequestParam String id)
+    public ResponseEntity<CompanyDTO> getCompanyById(@RequestParam String id)
     {
         logger.info("getCompanyById init");
         Company requestData = companyService.getCompanyById(Long.parseLong(id));
@@ -74,11 +74,11 @@ public class CompanyController
         {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(requestData);
+        return ResponseEntity.ok(companyService.toDTO(requestData));
     }
 
     @GetMapping(value = "/getCompanyByCode")
-    public ResponseEntity<Company> getCompanyByCode(@RequestParam String code)
+    public ResponseEntity<CompanyDTO> getCompanyByCode(@RequestParam String code)
     {
         logger.info("getCompanyByCode init");
         Company requestData = companyService.getCompanyByCode(code);
@@ -88,7 +88,7 @@ public class CompanyController
         {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(requestData);
+        return ResponseEntity.ok(companyService.toDTO(requestData));
     }
 
 

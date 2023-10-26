@@ -14,4 +14,6 @@ public interface CompanyService
     Company getCompanyByCode(String code);
 
     void deleteCompany(Company company);
+
+    CompanyDTO toDTO(Company company);
 }

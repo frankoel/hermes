@@ -96,4 +96,20 @@ public class UserServiceImpl implements UserService
 
         return user;
     }
+
+    @Override
+    public UserDTO toDTO(User user)
+    {
+        UserDTO userDTO = new UserDTO();
+
+        userDTO.setId(user.getId());
+        userDTO.setActive(user.getActive());
+        userDTO.setName(user.getName());
+        userDTO.setCode(user.getCode());
+        userDTO.setPassword(user.getPassword());
+        userDTO.setAdmin(user.getAdmin());
+        userDTO.setCompanyCode(user.getCompany().getCode());
+
+        return userDTO;
+    }
 }

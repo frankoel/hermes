@@ -11,6 +11,7 @@ import com.application.hermesteamsphere.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -105,5 +106,29 @@ public class DedicationServiceImpl implements DedicationService
         }
 
         return dedication;
+    }
+    @Override
+    public DedicationDTO toDTO(Dedication dedication)
+    {
+        DedicationDTO dedicationDTO = new DedicationDTO();
+
+        dedicationDTO.setId(dedication.getId());
+        dedicationDTO.setHoursInit(dedication.getHoursInit());
+        dedicationDTO.setHoursEnd(dedication.getHoursEnd());
+        dedicationDTO.setDescription(dedication.getDescription());
+        dedicationDTO.setUser(dedication.getUser().getCode());
+        dedicationDTO.setProjectCode(dedication.getProject().getCode());
+
+        return dedicationDTO;
+    }
+    @Override
+    public List<DedicationDTO> toListDTO(List<Dedication> listDedication)
+    {
+        List<DedicationDTO> listDedicationDTO = new ArrayList<>();
+        for (Dedication dedication:listDedication)
+        {
+            listDedicationDTO.add(toDTO(dedication));
+        }
+        return listDedicationDTO;
     }
 }

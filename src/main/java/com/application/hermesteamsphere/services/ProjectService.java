@@ -1,6 +1,8 @@
 package com.application.hermesteamsphere.services;
 
+import com.application.hermesteamsphere.data.Company;
 import com.application.hermesteamsphere.data.Project;
+import com.application.hermesteamsphere.dto.CompanyDTO;
 import com.application.hermesteamsphere.dto.ProjectDTO;
 
 import java.util.List;
@@ -18,4 +20,6 @@ public interface ProjectService
     List<Project> getProjectsByCodeCompany(String codeCompany);
 
     void deleteProject(Project project);
+
+    ProjectDTO toDTO(Project project);
 }

@@ -82,7 +82,7 @@ public class ProjectController
     }
 
     @GetMapping(value = "/getProjectById")
-    public ResponseEntity<Project> getProjectById(@RequestParam String id)
+    public ResponseEntity<ProjectDTO> getProjectById(@RequestParam String id)
     {
         logger.info("getProjectById init");
         Project requestData = projectService.getProjectById(Long.parseLong(id));
@@ -92,11 +92,11 @@ public class ProjectController
         {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(requestData);
+        return ResponseEntity.ok(projectService.toDTO(requestData));
     }
 
     @GetMapping(value = "/getProjectByCode")
-    public ResponseEntity<Project> getProjectByCode(@RequestParam String code)
+    public ResponseEntity<ProjectDTO> getProjectByCode(@RequestParam String code)
     {
         logger.info("getProjectByCode init");
         Project requestData = projectService.getProjectByCode(code);
@@ -106,7 +106,7 @@ public class ProjectController
         {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(requestData);
+        return ResponseEntity.ok(projectService.toDTO(requestData));
     }
 
 
