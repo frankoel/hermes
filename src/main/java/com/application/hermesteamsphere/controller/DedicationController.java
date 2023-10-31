@@ -105,7 +105,7 @@ public class DedicationController
         List<Dedication> requestData = dedicationService.getDedicationsByCodeProjectAndCodeUser(codProject, codUser);
         logger.info("getDedicationById end");
 
-        if(requestData == null)
+        if(requestData == null || requestData.isEmpty())
         {
             return ResponseEntity.notFound().build();
         }
