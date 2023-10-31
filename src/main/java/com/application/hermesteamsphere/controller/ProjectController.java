@@ -73,6 +73,7 @@ public class ProjectController
             requestData.setCode(project.getCode());
             requestData.setName(project.getName());
             requestData.setActive(project.getActive());
+            requestData.setDescription(project.getDescription());
             requestData.setCompany(comp);
             projectService.saveProject(requestData);
         }
