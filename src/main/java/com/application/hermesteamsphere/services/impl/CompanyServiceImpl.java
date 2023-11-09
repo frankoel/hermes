@@ -7,6 +7,8 @@ import com.application.hermesteamsphere.services.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -35,6 +37,12 @@ public class CompanyServiceImpl implements CompanyService
     }
 
     @Override
+    public List<Company> getAllCompany()
+    {
+        return companyRepository.findAll();
+    }
+
+    @Override
     public Company getCompanyById(Long id)
     {
         Optional<Company> result = companyRepository.findById(id);
@@ -50,6 +58,18 @@ public class CompanyServiceImpl implements CompanyService
     public Company getCompanyByCode(String code)
     {
         Optional<Company> result = companyRepository.findByCode(code);
+        if(result.isPresent())
+        {
+            return result.get();
+        }
+
+        return null;
+    }
+
+    @Override
+    public Company getCompanyByName(String name)
+    {
+        Optional<Company> result = companyRepository.findByName(name);
         if(result.isPresent())
         {
             return result.get();
@@ -81,5 +101,16 @@ public class CompanyServiceImpl implements CompanyService
         companyDTO.setCode(company.getCode());
 
         return companyDTO;
+    }
+
+    @Override
+    public List<CompanyDTO> toListDTO(List<Company> listCompany)
+    {
+        List<CompanyDTO> listCompanyDTO = new ArrayList<>();
+        for (Company company:listCompany)
+        {
+            listCompanyDTO.add(toDTO(company));
+        }
+        return listCompanyDTO;
     }
 }

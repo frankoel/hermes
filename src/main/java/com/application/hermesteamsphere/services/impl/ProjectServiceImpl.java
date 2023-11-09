@@ -68,11 +68,21 @@ public class ProjectServiceImpl implements ProjectService
     }
 
     @Override
+    public Project getProjectByName(String name)
+    {
+        Optional<Project> result = projectRepository.findByName(name);
+        if(result.isPresent())
+        {
+            return result.get();
+        }
+
+        return null;
+    }
+
+    @Override
     public List<Project> getProjectsByCodeCompany(String codeCompany)
     {
-        List<Project> result = projectRepository.findByCompanyCode(codeCompany);
-
-        return result;
+        return projectRepository.findByCompanyCode(codeCompany);
     }
 
     private Project projectDTOtoProject(ProjectDTO projectDTO)

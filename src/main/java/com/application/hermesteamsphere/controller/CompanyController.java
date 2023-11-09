@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/company")
 public class CompanyController
@@ -18,6 +20,7 @@ public class CompanyController
 
     private static final Logger logger = LoggerFactory.getLogger(CompanyController.class);
 
+    @CrossOrigin
     @PostMapping()
     public ResponseEntity<String> createCompany(@RequestBody CompanyDTO company)
     {
@@ -26,7 +29,12 @@ public class CompanyController
 
         if(companyService.getCompanyByCode(company.getCode()) != null)
         {
-            return ResponseEntity.badRequest().body("Code " + company.getCode() + " duplicated");
+            return ResponseEntity.badRequest().body("Company code " + company.getCode() + " is duplicated");
+        }
+
+        if(companyService.getCompanyByName(company.getName()) != null)
+        {
+            return ResponseEntity.badRequest().body("Company name " + company.getName() + " is duplicated");
         }
 
         Company requestData = companyService.saveCompany(company);
@@ -34,7 +42,7 @@ public class CompanyController
 
         return ResponseEntity.ok("Created with id [" + requestData.getId() + "]");
     }
-
+    @CrossOrigin
     @PutMapping()
     public ResponseEntity<String> updateCompany(@RequestBody CompanyDTO company)
     {
@@ -49,7 +57,13 @@ public class CompanyController
             Company comp = companyService.getCompanyByCode(company.getCode());
             if(comp != null && comp.getId() != company.getId())
             {
-                return ResponseEntity.badRequest().body("Code " + company.getCode() + " duplicated");
+                return ResponseEntity.badRequest().body("Company code" + company.getCode() + " is duplicated");
+            }
+
+            comp = companyService.getCompanyByName(company.getName());
+            if(comp != null && comp.getId() != company.getId())
+            {
+                return ResponseEntity.badRequest().body("Company name" + company.getName() + " is duplicated");
             }
 
             requestData.setId(company.getId());
@@ -62,7 +76,21 @@ public class CompanyController
 
         return ResponseEntity.ok("Updated ok");
     }
+    @CrossOrigin
+    @GetMapping(value = "/getAllCompany")
+    public ResponseEntity<List<CompanyDTO>> getAllCompany()
+    {
+        logger.info("getAllCompany init");
+        List<Company> requestData = companyService.getAllCompany();
+        logger.info("getAllCompany end");
 
+        if(requestData == null || requestData.isEmpty())
+        {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(companyService.toListDTO(requestData));
+    }
+    @CrossOrigin
     @GetMapping(value = "/getCompanyById")
     public ResponseEntity<CompanyDTO> getCompanyById(@RequestParam String id)
     {
@@ -76,7 +104,7 @@ public class CompanyController
         }
         return ResponseEntity.ok(companyService.toDTO(requestData));
     }
-
+    @CrossOrigin
     @GetMapping(value = "/getCompanyByCode")
     public ResponseEntity<CompanyDTO> getCompanyByCode(@RequestParam String code)
     {
@@ -91,7 +119,7 @@ public class CompanyController
         return ResponseEntity.ok(companyService.toDTO(requestData));
     }
 
-
+    @CrossOrigin
     @DeleteMapping(value="/{id}")
     public ResponseEntity<String> deleteCompany(@PathVariable String id)
     {

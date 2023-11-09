@@ -29,7 +29,7 @@ public class DedicationController
     ProjectService projectService;
 
     private static final Logger logger = LoggerFactory.getLogger(DedicationController.class);
-
+    @CrossOrigin
     @PostMapping()
     public ResponseEntity<String> createDedication(@RequestBody DedicationDTO dedication)
     {
@@ -47,7 +47,7 @@ public class DedicationController
         }
 
     }
-
+    @CrossOrigin
     @PutMapping()
     public ResponseEntity<String> updateDedication(@RequestBody DedicationDTO dedication)
     {
@@ -83,7 +83,7 @@ public class DedicationController
 
         return ResponseEntity.ok("Updated ok");
     }
-
+    @CrossOrigin
     @GetMapping(value = "/getDedicationById")
     public ResponseEntity<DedicationDTO> getDedicationById(@RequestParam String id)
     {
@@ -97,7 +97,7 @@ public class DedicationController
         }
         return ResponseEntity.ok(dedicationService.toDTO(requestData));
     }
-
+    @CrossOrigin
     @GetMapping(value = "/getDedicationByProjectAndUser")
     public ResponseEntity<List<DedicationDTO>> getDedicationByProjectAndUser(@RequestParam String codProject, @RequestParam String codUser)
     {
@@ -113,7 +113,7 @@ public class DedicationController
         return ResponseEntity.ok(dedicationService.toListDTO(requestData));
     }
 
-
+    @CrossOrigin
     @DeleteMapping(value="/{id}")
     public ResponseEntity<String> deleteDedication(@PathVariable String id)
     {

@@ -3,27 +3,14 @@ package com.application.hermesteamsphere.controller;
 import com.application.hermesteamsphere.data.Company;
 import com.application.hermesteamsphere.data.User;
 import com.application.hermesteamsphere.dto.UserDTO;
-import com.application.hermesteamsphere.dto.UserRestDTO;
 import com.application.hermesteamsphere.repositories.UserRepository;
 import com.application.hermesteamsphere.services.CompanyService;
 import com.application.hermesteamsphere.services.UserService;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
-import static com.application.hermesteamsphere.util.Constantes.*;
 
 @RestController()
 public class UserController {
@@ -138,6 +125,7 @@ public class UserController {
         return ResponseEntity.ok("Deleted ok");
     }
 
+    /*@CrossOrigin
     @PostMapping(value="/user/login")
     public ResponseEntity<String> loginNew(@RequestBody UserRestDTO us) {
         // Ficticio, deberá recuperarse de la BD
@@ -160,7 +148,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 
     }
-    
+
 	public static String getTokenForUser(User user, boolean expiration) {
 		
 		String[] rolesForUser = new String[1];
@@ -194,6 +182,6 @@ public class UserController {
         }
 
         return PREFIX + token;
-    }
+    }*/
 
 }

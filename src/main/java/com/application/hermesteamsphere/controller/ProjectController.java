@@ -2,7 +2,6 @@ package com.application.hermesteamsphere.controller;
 
 import com.application.hermesteamsphere.data.Company;
 import com.application.hermesteamsphere.data.Project;
-import com.application.hermesteamsphere.dto.CompanyDTO;
 import com.application.hermesteamsphere.dto.ProjectDTO;
 import com.application.hermesteamsphere.services.CompanyService;
 import com.application.hermesteamsphere.services.ProjectService;
@@ -23,7 +22,7 @@ public class ProjectController
     CompanyService companyService;
 
     private static final Logger logger = LoggerFactory.getLogger(ProjectController.class);
-
+    @CrossOrigin
     @PostMapping()
     public ResponseEntity<String> createProject(@RequestBody ProjectDTO project)
     {
@@ -32,7 +31,12 @@ public class ProjectController
 
         if(projectService.getProjectByCode(project.getCode()) != null)
         {
-            return ResponseEntity.badRequest().body("Code " + project.getCode() + " duplicated");
+            return ResponseEntity.badRequest().body("Project code " + project.getCode() + " is duplicated");
+        }
+
+        if(projectService.getProjectByName(project.getName()) != null)
+        {
+            return ResponseEntity.badRequest().body("Project name " + project.getName() + " is duplicated");
         }
 
         Project requestData = projectService.saveProject(project);
@@ -45,7 +49,7 @@ public class ProjectController
         }
 
     }
-
+    @CrossOrigin
     @PutMapping()
     public ResponseEntity<String> updateProject(@RequestBody ProjectDTO project)
     {
@@ -60,7 +64,13 @@ public class ProjectController
             Project proy = projectService.getProjectByCode(project.getCode());
             if(proy != null && proy.getId() != project.getId())
             {
-                return ResponseEntity.badRequest().body("Code " + project.getCode() + " duplicated");
+                return ResponseEntity.badRequest().body("Project code " + project.getCode() + " is duplicated");
+            }
+
+            proy = projectService.getProjectByName(project.getName());
+            if(proy != null && proy.getId() != project.getId())
+            {
+                return ResponseEntity.badRequest().body("Project name " + project.getName() + " is duplicated");
             }
 
             Company comp = companyService.getCompanyByCode(project.getCodeCompany());
@@ -81,7 +91,7 @@ public class ProjectController
 
         return ResponseEntity.ok("Updated ok");
     }
-
+    @CrossOrigin
     @GetMapping(value = "/getProjectById")
     public ResponseEntity<ProjectDTO> getProjectById(@RequestParam String id)
     {
@@ -95,7 +105,7 @@ public class ProjectController
         }
         return ResponseEntity.ok(projectService.toDTO(requestData));
     }
-
+    @CrossOrigin
     @GetMapping(value = "/getProjectByCode")
     public ResponseEntity<ProjectDTO> getProjectByCode(@RequestParam String code)
     {
@@ -110,7 +120,7 @@ public class ProjectController
         return ResponseEntity.ok(projectService.toDTO(requestData));
     }
 
-
+    @CrossOrigin
     @DeleteMapping(value="/{id}")
     public ResponseEntity<String> deleteProject(@PathVariable String id)
     {

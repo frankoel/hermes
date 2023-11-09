@@ -106,7 +106,7 @@ public class UserServiceImpl implements UserService
         userDTO.setActive(user.getActive());
         userDTO.setName(user.getName());
         userDTO.setCode(user.getCode());
-        userDTO.setPassword(user.getPassword());
+        userDTO.setPassword("*************");
         userDTO.setAdmin(user.getAdmin());
         userDTO.setCompanyCode(user.getCompany().getCode());
 
