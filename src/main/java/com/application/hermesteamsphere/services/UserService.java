@@ -20,4 +20,6 @@ public interface UserService
     void deleteUser(User project);
 
     UserDTO toDTO(User user);
+
+    List<UserDTO> toListDTO(List<User> user);
 }

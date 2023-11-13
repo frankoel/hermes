@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/project")
 public class ProjectController
@@ -118,6 +120,22 @@ public class ProjectController
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(projectService.toDTO(requestData));
+    }
+
+    @CrossOrigin
+    @GetMapping(value = "/getProjectsByCodeCompany")
+    public ResponseEntity<List<ProjectDTO>> getProjectsByCodeCompany(@RequestParam String codeCompany)
+    {
+        logger.info("getProjectsByCodeCompany init");
+
+        List<Project> requestData = projectService.getProjectsByCodeCompany(codeCompany);
+        logger.info("getProjectsByCodeCompany end");
+
+        if(requestData == null || requestData.isEmpty())
+        {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(projectService.toListDTO(requestData));
     }
 
     @CrossOrigin

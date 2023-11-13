@@ -9,6 +9,7 @@ import com.application.hermesteamsphere.services.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -122,4 +123,16 @@ public class ProjectServiceImpl implements ProjectService
 
         return projectDTO;
     }
+
+    public List<ProjectDTO> toListDTO(List<Project> listProject)
+    {
+        List<ProjectDTO> listProjectDTO = new ArrayList<>();
+        for (Project project:listProject)
+        {
+            listProjectDTO.add(toDTO(project));
+        }
+        return listProjectDTO;
+    }
+
+
 }

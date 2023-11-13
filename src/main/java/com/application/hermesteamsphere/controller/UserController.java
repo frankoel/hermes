@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController()
 public class UserController {
 	
@@ -104,6 +106,20 @@ public class UserController {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(userService.toDTO(requestData));
+    }
+
+    @GetMapping(value = "/user/getUserByCodeCompany")
+    public ResponseEntity<List<UserDTO>> getUserByCodeCompany(@RequestParam String codeCompany)
+    {
+        logger.info("getUserByCodeCompany init");
+        List<User> requestData = userService.getUsersByCodeCompany(codeCompany);
+        logger.info("getUserByCodeCompany end");
+
+        if(requestData == null)
+        {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(userService.toListDTO(requestData));
     }
 
 

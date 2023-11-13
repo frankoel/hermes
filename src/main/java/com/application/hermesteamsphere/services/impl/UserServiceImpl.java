@@ -9,6 +9,7 @@ import com.application.hermesteamsphere.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -111,5 +112,15 @@ public class UserServiceImpl implements UserService
         userDTO.setCompanyCode(user.getCompany().getCode());
 
         return userDTO;
+    }
+
+    public List<UserDTO> toListDTO(List<User> listUser)
+    {
+        List<UserDTO> listUserDTO = new ArrayList<>();
+        for (User user:listUser)
+        {
+            listUserDTO.add(toDTO(user));
+        }
+        return listUserDTO;
     }
 }

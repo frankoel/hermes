@@ -22,4 +22,6 @@ public interface ProjectService
     void deleteProject(Project project);
 
     ProjectDTO toDTO(Project project);
+
+    List<ProjectDTO> toListDTO(List<Project> listProject);
 }
