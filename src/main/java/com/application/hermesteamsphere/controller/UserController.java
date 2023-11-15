@@ -31,6 +31,7 @@ public class UserController {
 
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
     @PostMapping("/user")
+    @CrossOrigin
     public ResponseEntity<String> createUser(@RequestBody UserDTO user)
     {
         logger.info("createDedication init");
@@ -49,6 +50,7 @@ public class UserController {
     }
 
     @PutMapping("/user")
+    @CrossOrigin
     public ResponseEntity<String> updateUser(@RequestBody UserDTO user)
     {
         logger.info("updateUser init");
@@ -81,6 +83,7 @@ public class UserController {
     }
 
     @GetMapping(value = "/user/getUserById")
+    @CrossOrigin
     public ResponseEntity<UserDTO> getUserById(@RequestParam String id)
     {
         logger.info("getUserById init");
@@ -95,6 +98,7 @@ public class UserController {
     }
 
     @GetMapping(value = "/user/getUserByCode")
+    @CrossOrigin
     public ResponseEntity<UserDTO> getUserByCode(@RequestParam String code)
     {
         logger.info("getUserByCode init");
@@ -108,8 +112,9 @@ public class UserController {
         return ResponseEntity.ok(userService.toDTO(requestData));
     }
 
-    @GetMapping(value = "/user/getUserByCodeCompany")
-    public ResponseEntity<List<UserDTO>> getUserByCodeCompany(@RequestParam String codeCompany)
+    @GetMapping(value = "/user/getUsersByCodeCompany")
+    @CrossOrigin
+    public ResponseEntity<List<UserDTO>> getUsersByCodeCompany(@RequestParam String codeCompany)
     {
         logger.info("getUserByCodeCompany init");
         List<User> requestData = userService.getUsersByCodeCompany(codeCompany);
@@ -124,6 +129,7 @@ public class UserController {
 
 
     @DeleteMapping(value="/user/{id}")
+    @CrossOrigin
     public ResponseEntity<String> deleteUser(@PathVariable String id)
     {
         logger.info("deleteUser init");
