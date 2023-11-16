@@ -1,9 +1,11 @@
 package com.application.hermesteamsphere.controller;
 
 import com.application.hermesteamsphere.data.Company;
+import com.application.hermesteamsphere.data.Dedication;
 import com.application.hermesteamsphere.data.Project;
 import com.application.hermesteamsphere.dto.ProjectDTO;
 import com.application.hermesteamsphere.services.CompanyService;
+import com.application.hermesteamsphere.services.DedicationService;
 import com.application.hermesteamsphere.services.ProjectService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,6 +24,9 @@ public class ProjectController
 
     @Autowired
     CompanyService companyService;
+
+    @Autowired
+    DedicationService dedicationService;
 
     private static final Logger logger = LoggerFactory.getLogger(ProjectController.class);
     @CrossOrigin
@@ -144,13 +149,23 @@ public class ProjectController
     {
         logger.info("deleteProject init");
         Project requestData = projectService.getProjectById(Long.parseLong(id));
+
         if(requestData == null)
         {
             return ResponseEntity.notFound().build();
         }
         else
         {
-            projectService.deleteProject(requestData);
+            List<Dedication> dedications = dedicationService.getDedicationsByCodeProject(requestData.getCode());
+            if (dedications == null || dedications.isEmpty())
+            {
+                projectService.deleteProject(requestData);
+            }
+            else
+            {
+                return ResponseEntity.badRequest().build();
+            }
+
         }
         logger.info("deleteProject end");
 
