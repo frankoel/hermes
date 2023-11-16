@@ -1,8 +1,13 @@
 package com.application.hermesteamsphere.controller;
 
 import com.application.hermesteamsphere.data.Company;
+import com.application.hermesteamsphere.data.Dedication;
+import com.application.hermesteamsphere.data.Project;
+import com.application.hermesteamsphere.data.User;
 import com.application.hermesteamsphere.dto.CompanyDTO;
 import com.application.hermesteamsphere.services.CompanyService;
+import com.application.hermesteamsphere.services.ProjectService;
+import com.application.hermesteamsphere.services.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +22,12 @@ public class CompanyController
 {
     @Autowired
     CompanyService companyService;
+
+    @Autowired
+    UserService userService;
+
+    @Autowired
+    ProjectService projectService;
 
     private static final Logger logger = LoggerFactory.getLogger(CompanyController.class);
 
@@ -116,6 +127,7 @@ public class CompanyController
         {
             return ResponseEntity.notFound().build();
         }
+
         return ResponseEntity.ok(companyService.toDTO(requestData));
     }
 
@@ -131,8 +143,19 @@ public class CompanyController
         }
         else
         {
-            companyService.deleteCompany(requestData);
+            List<User> users = userService.getUsersByCodeCompany(requestData.getCode());
+            List<Project> projects = projectService.getProjectsByCodeCompany(requestData.getCode());
+            if ((users == null || users.isEmpty()) && (projects == null || projects.isEmpty()))
+            {
+                companyService.deleteCompany(requestData);
+            }
+            else
+            {
+                return ResponseEntity.badRequest().build();
+            }
+
         }
+
         logger.info("deleteCompany end");
 
         return ResponseEntity.ok("Deleted ok");
