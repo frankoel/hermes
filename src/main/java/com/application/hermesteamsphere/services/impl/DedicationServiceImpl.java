@@ -71,6 +71,13 @@ public class DedicationServiceImpl implements DedicationService
     }
 
     @Override
+    public List<Dedication> getDedicationsByCodeUser(String codeUser)
+    {
+        return dedicationRepository.findByUserCode(codeUser);
+
+    }
+
+    @Override
     public List<Dedication> getDedicationsByCodeProjectAndCodeUser(String codeProject, String codeUser)
     {
         return dedicationRepository.findByProjectCodeAndUserCode(codeProject, codeUser);

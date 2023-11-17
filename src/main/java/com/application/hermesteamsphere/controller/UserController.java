@@ -1,10 +1,12 @@
 package com.application.hermesteamsphere.controller;
 
 import com.application.hermesteamsphere.data.Company;
+import com.application.hermesteamsphere.data.Dedication;
 import com.application.hermesteamsphere.data.User;
 import com.application.hermesteamsphere.dto.UserDTO;
 import com.application.hermesteamsphere.repositories.UserRepository;
 import com.application.hermesteamsphere.services.CompanyService;
+import com.application.hermesteamsphere.services.DedicationService;
 import com.application.hermesteamsphere.services.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,6 +30,9 @@ public class UserController {
 
     @Autowired
     CompanyService companyService;
+
+    @Autowired
+    DedicationService dedicationService;
 
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
     @PostMapping("/user")
@@ -140,7 +145,16 @@ public class UserController {
         }
         else
         {
-            userService.deleteUser(requestData);
+            List<Dedication> dedications = dedicationService.getDedicationsByCodeUser(requestData.getCode());
+            if (dedications == null || dedications.isEmpty())
+            {
+                userService.deleteUser(requestData);
+            }
+            else
+            {
+                return ResponseEntity.badRequest().build();
+            }
+
         }
         logger.info("deleteUser end");
 
