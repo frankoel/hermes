@@ -30,6 +30,9 @@ public class User implements Serializable {
 	
 	@NotNull
     private String password;
+
+    @NotNull
+    private String email;
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "company_id", referencedColumnName = "id")

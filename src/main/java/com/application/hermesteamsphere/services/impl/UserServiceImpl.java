@@ -83,6 +83,7 @@ public class UserServiceImpl implements UserService
         user.setName(userDTO.getName());
         user.setCode(userDTO.getCode());
         user.setPassword(userDTO.getPassword());
+        user.setEmail(userDTO.getEmail());
         user.setAdmin(userDTO.getAdmin());
 
         Company company = companyService.getCompanyByCode(userDTO.getCompanyCode());
@@ -108,6 +109,7 @@ public class UserServiceImpl implements UserService
         userDTO.setName(user.getName());
         userDTO.setCode(user.getCode());
         userDTO.setPassword("*************");
+        userDTO.setEmail(user.getEmail());
         userDTO.setAdmin(user.getAdmin());
         userDTO.setCompanyCode(user.getCompany().getCode());
 

@@ -77,6 +77,7 @@ public class UserController {
             requestData.setName(user.getName());
             requestData.setCode(user.getCode());
             requestData.setPassword(user.getPassword());
+            requestData.setEmail(user.getEmail());
             requestData.setAdmin(user.getAdmin());
 
             requestData.setCompany(comp);

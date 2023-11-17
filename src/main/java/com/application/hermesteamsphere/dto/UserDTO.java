@@ -9,6 +9,7 @@ public class UserDTO {
     private String name;
     private String code;
     private String password;
+    private String email;
 	private String companyCode;
     private Boolean active;
     private Boolean admin;
