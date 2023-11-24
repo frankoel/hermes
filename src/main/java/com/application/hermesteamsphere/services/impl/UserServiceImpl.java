@@ -7,6 +7,7 @@ import com.application.hermesteamsphere.repositories.UserRepository;
 import com.application.hermesteamsphere.services.CompanyService;
 import com.application.hermesteamsphere.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -69,6 +70,18 @@ public class UserServiceImpl implements UserService
     }
 
     @Override
+    public User getUserByEmail(String email)
+    {
+        Optional<User> result = userRepository.findByEmail(email);
+        if(result.isPresent())
+        {
+            return result.get();
+        }
+
+        return null;
+    }
+
+    @Override
     public List<User> getUsersByCodeCompany(String codeCompany)
     {
         return userRepository.findByCompanyCode(codeCompany);
@@ -82,7 +95,7 @@ public class UserServiceImpl implements UserService
         user.setActive(userDTO.getActive());
         user.setName(userDTO.getName());
         user.setCode(userDTO.getCode());
-        user.setPassword(userDTO.getPassword());
+        user.setPassword(new BCryptPasswordEncoder().encode(userDTO.getPassword()));
         user.setEmail(userDTO.getEmail());
         user.setAdmin(userDTO.getAdmin());
 

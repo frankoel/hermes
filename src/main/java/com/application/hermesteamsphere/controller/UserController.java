@@ -12,15 +12,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController()
 public class UserController {
-	
-	private static final String USER_SEPARATOR = "_";
-    private static final long EXPIRATION_TIME = 10 * 60 * 1000L; // 10 minutos
 
     @Autowired
     UserRepository userRepository;
@@ -76,7 +74,7 @@ public class UserController {
             requestData.setActive(user.getActive());
             requestData.setName(user.getName());
             requestData.setCode(user.getCode());
-            requestData.setPassword(user.getPassword());
+            requestData.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
             requestData.setEmail(user.getEmail());
             requestData.setAdmin(user.getAdmin());
 
@@ -161,64 +159,5 @@ public class UserController {
 
         return ResponseEntity.ok("Deleted ok");
     }
-
-    /*@CrossOrigin
-    @PostMapping(value="/user/login")
-    public ResponseEntity<String> loginNew(@RequestBody UserRestDTO us) {
-        // Ficticio, deberá recuperarse de la BD
-        // Obtener el user con el code indicado y
-        // comparar si la password es la misma
-        Optional<User> user = userRepository.findByCode(us.getCode());
-        if(user.isPresent())
-        {
-            User u = user.get();
-            if (u.getPassword().equals((us.getPassword())))
-            {
-                //user.setId(1L);
-                //user.setCode(us.getCode());
-                //user.setName("name");
-
-                String token = getTokenForUser(u, true);
-                return ResponseEntity.accepted().body(token);
-            }
-        }
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-
-    }
-
-	public static String getTokenForUser(User user, boolean expiration) {
-		
-		String[] rolesForUser = new String[1];
-        rolesForUser[0] = "ACCESO_API";
-
-        List<GrantedAuthority> grantedAuthorities = AuthorityUtils.createAuthorityList(rolesForUser);
-
-        String subject = user.getName() + USER_SEPARATOR + user.getId();
-
-        String token;
-        if (expiration)
-        {
-            token = Jwts.builder().setId(TOKEN_ID).setSubject(subject)
-                    .claim("authorities",
-                            grantedAuthorities.stream()
-                                    .map(GrantedAuthority::getAuthority)
-                                    .collect(Collectors.toList()))
-                    .setIssuedAt(new Date(System.currentTimeMillis()))
-                    .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
-                    .signWith(SignatureAlgorithm.HS512, SECRET.getBytes()).compact();
-        }
-        else
-        {
-            token = Jwts.builder().setId(TOKEN_ID).setSubject(subject)
-                    .claim("authorities",
-                            grantedAuthorities.stream()
-                                    .map(GrantedAuthority::getAuthority)
-                                    .collect(Collectors.toList()))
-                    .setIssuedAt(new Date(System.currentTimeMillis()))
-                    .signWith(SignatureAlgorithm.HS512, SECRET.getBytes()).compact();
-        }
-
-        return PREFIX + token;
-    }*/
 
 }

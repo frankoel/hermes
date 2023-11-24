@@ -3,8 +3,8 @@ package com.application.hermesteamsphere.dto;
 import lombok.Data;
 
 @Data
-public class UserRestDTO
+public class LoginResDTO
 {
-	private String code;
-	private String password;
+	private String email;
+	private String token;
 }
