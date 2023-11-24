@@ -23,7 +23,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     private static final Logger logger = LoggerFactory.getLogger(CustomUserDetailsService.class);
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        UserDetails userDetails = null;
+        UserDetails userDetails;
         Optional<User> user = userRepository.findByEmail(email);
         if (user.isPresent())
         {
@@ -43,9 +43,12 @@ public class CustomUserDetailsService implements UserDetailsService {
                             .password(user.get().getPassword())
                             .roles(roles.toArray(new String[1]))
                             .build();
-            return userDetails;
+
         }
-        logger.info("userDetails null");
+        else
+        {
+            throw new UsernameNotFoundException("User " + email + " not found");
+        }
         return userDetails;
     }
 }
